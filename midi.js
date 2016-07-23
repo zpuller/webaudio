@@ -13,14 +13,6 @@ var playing = false;
 var record_handle;
 var play_handle;
 
-var canvas = document.getElementById('canvas');
-canvas.width = 1920;
-canvas.height = 1080;
-
-var red = 'rgb(255, 0, 0)'
-var green = 'rgb(0, 255, 0)'
-var white = 'rgb(255, 255, 255)'
-
 function key_is_valid(key)
 {
   return (all_keys.indexOf(key) != -1);
@@ -140,60 +132,6 @@ function check_key()
       stop_playback();
   }
 }
-
-function draw_canvas_background()
-{
-  var ctx = canvas.getContext('2d');
-  ctx.fillStyle = 'rgb(0, 0, 0)';
-  ctx.fillRect (0, 0, canvas.width, canvas.height);
-}
-
-function draw_play() {
-  var ctx = canvas.getContext('2d');
-
-  ctx.lineWidth = 5;
-  ctx.beginPath();
-  ctx.moveTo(3*5 + 75, 50);
-  ctx.lineTo(3*5 + 50, 75);
-  ctx.lineTo(3*5 + 50, 25);
-  ctx.lineTo(3*5 + 77, 52);
-  ctx.stroke();
-}
-
-function fill_play(color) {
-  var ctx = canvas.getContext('2d');
-
-  ctx.beginPath();
-  ctx.moveTo(3*5 + 75, 50);
-  ctx.lineTo(3*5 + 50, 75);
-  ctx.lineTo(3*5 + 50, 25);
-  ctx.fillStyle = color; 
-  ctx.fill();
-}
-
-function draw_record()
-{
-  var ctx = canvas.getContext('2d');
-  
-  ctx.lineWidth = 4;
-  ctx.beginPath();
-  ctx.arc(5 + 25, 50, 25, 0, 2*Math.PI);
-  ctx.stroke();
-}
-
-function fill_record(color)
-{
-  var ctx = canvas.getContext('2d');
-  
-  ctx.lineWidth = 4;
-  ctx.beginPath();
-  ctx.arc(5 + 25, 50, 25 - 2, 0, 2*Math.PI);
-  ctx.fillStyle = color;
-  ctx.fill();
-}
-
-draw_play();
-draw_record();
 
 clear_frames();
 window.addEventListener('keydown', check_key)

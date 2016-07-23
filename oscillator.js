@@ -14,7 +14,7 @@ masterGain.connect(convolver);
 masterGain.connect(audio_ctx.destination);
 convolver.connect(reverbGain);
 reverbGain.connect(audio_ctx.destination);
-reverbGain.gain.value = .1;
+reverbGain.gain.value = 0;
 masterGain.gain.value = 0; 
 
 oscillator.type = 'sine';
