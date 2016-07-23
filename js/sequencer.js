@@ -32,7 +32,7 @@ function handle_click(event)
   else
   {
     active_tiles[tile.y][tile.x] = false;
-    fill_tile(tile, red);
+    fill_tile(tile, grey);
   }
 }
 
