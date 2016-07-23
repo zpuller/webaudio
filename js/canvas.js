@@ -6,6 +6,7 @@ var red = 'rgb(255, 0, 0)'
 var green = 'rgb(0, 255, 0)'
 var white = 'rgb(255, 255, 255)'
 var black = 'rgb(0, 0, 0)'
+var grey = 'rgb(80, 80, 80)'
 
 function draw_rectangle(x, y, width, height, color)
 {
@@ -74,7 +75,7 @@ function render()
   grid.y = (canvas.height - img.height)/2 + 60;
   grid.width = img.width - 120;
   grid.height = img.height - 120;
-  draw_rectangle(grid.x, grid.y, grid.width, grid.height, red)
+  draw_rectangle(grid.x, grid.y, grid.width, grid.height, grey)
 }
 
 function fill_tile(tile, color)
