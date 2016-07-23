@@ -1,6 +1,7 @@
 audio_ctx = new (window.AudioContext || window.webkitAudioContext)();
 
-function BufferLoader(audio_ctx, urlList, callback) {
+function BufferLoader(audio_ctx, urlList, callback)
+{
   this.audio_ctx = audio_ctx;
   this.urlList = urlList;
   this.onload = callback;
@@ -8,7 +9,8 @@ function BufferLoader(audio_ctx, urlList, callback) {
   this.loadCount = 0;
 }
 
-BufferLoader.prototype.loadBuffer = function(url, index) {
+BufferLoader.prototype.load_buffer = function(url, index)
+{
   var request = new XMLHttpRequest();
   request.open("GET", url, true);
   request.responseType = "arraybuffer";
@@ -42,31 +44,36 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
 
 BufferLoader.prototype.load = function() {
   for (var i = 0; i < this.urlList.length; ++i)
-  this.loadBuffer(this.urlList[i], i);
+  this.load_buffer(this.urlList[i], i);
 };
 
-function playSound(buffer, time) {
+function play_sound(buffer, time) 
+{
   var source = audio_ctx.createBufferSource();
   source.buffer = buffer;
   source.connect(audio_ctx.destination);
   source[source.start ? 'start' : 'noteOn'](time);
 }
 
-function loadSounds(obj, soundMap, callback) {
+function load_sounds(obj, soundMap, callback) 
+{
   var names = [];
   var paths = [];
-  for (var name in soundMap) {
+  for (var name in soundMap) 
+  {
     var path = soundMap[name];
     names.push(name);
     paths.push(path);
   }
   bufferLoader = new BufferLoader(audio_ctx, paths, function(bufferList) {
-    for (var i = 0; i < bufferList.length; i++) {
+    for (var i = 0; i < bufferList.length; i++) 
+    {
       var buffer = bufferList[i];
       var name = names[i];
       obj[name] = buffer;
     }
-    if (callback) {
+    if (callback)
+    {
       callback();
     }
   });
@@ -74,6 +81,14 @@ function loadSounds(obj, soundMap, callback) {
 }
 
 var buffers = {};
-var paths = {};
-paths.choke = [location.origin,'/choke.wav'].join('');
-loadSounds(buffers, paths, function() { playSound(buffers.choke, 0); });
+var paths = { 1: [location.origin,'/samples/1.wav'].join('')
+    , 2: [location.origin,'/samples/2.wav'].join('')
+    , 3: [location.origin,'/samples/3.wav'].join('')
+    , 4: [location.origin,'/samples/4.wav'].join('')
+    , 5: [location.origin,'/samples/5.wav'].join('')
+    , 6: [location.origin,'/samples/6.wav'].join('')
+    , 7: [location.origin,'/samples/7.wav'].join('')
+    , 8: [location.origin,'/samples/8.wav'].join('')
+};
+
+load_sounds(buffers, paths, function() {});

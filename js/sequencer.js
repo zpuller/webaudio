@@ -1,3 +1,15 @@
+var grid = { dimension: 8 };
+var grid_keys = ['a','s','d','f','g','h','j','k'];
+var active_tiles = [];
+for (var i = 0; i < grid.dimension; ++i)
+{
+  active_tiles[i] = [];
+  for (var j = 0; j < grid.dimension; ++j)
+  {
+    active_tiles[i][j] = false;
+  }
+}
+
 function handle_click(event)
 {
   var x = Math.floor(canvas.width * (event.offsetX / canvas.clientWidth));
@@ -24,31 +36,13 @@ function handle_click(event)
   }
 }
 
-var grid = { dimension: 8 };
-var active_tiles = [];
-for (var i = 0; i < grid.dimension; ++i)
-{
-  active_tiles[i] = [];
-  for (var j = 0; j < grid.dimension; ++j)
-  {
-    active_tiles[i][j] = false;
-  }
-}
-
-window.addEventListener('mousedown', handle_click);
-
-var grid_keys = ['a','s','d','f','g','h','j','k'];
 function play_beat(beat)
 {
   for (var i = 0; i < grid.dimension; ++i)
   {
     if (active_tiles[i][beat])
     {
-      press_key({ key: grid_keys[i] });
-    }
-    else
-    {
-      release_key({ key: grid_keys[i] });
+      play_sound(buffers[i+1], 0);
     }
   }
 }
@@ -59,4 +53,6 @@ function tick()
   beat = (beat + 1) % 8;
   play_beat(beat);
 }
+
 setInterval(tick, 1000 / 2);
+window.addEventListener('mousedown', handle_click);
