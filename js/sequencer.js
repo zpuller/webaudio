@@ -27,12 +27,12 @@ function handle_click(event)
   if (!active_tiles[tile.y][tile.x])
   {
     active_tiles[tile.y][tile.x] = true;
-    fill_tile(tile, green);
+    fill_tile_img(tile, tile_img);
   }
   else
   {
     active_tiles[tile.y][tile.x] = false;
-    fill_tile(tile, grey);
+    fill_tile_color(tile, grey);
   }
 }
 
