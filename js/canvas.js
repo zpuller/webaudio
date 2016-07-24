@@ -85,3 +85,15 @@ function fill_tile_img(tile, img)
   var ctx = canvas.getContext('2d');
   ctx.drawImage(img, x, y, width, height); 
 }
+
+function draw_row_selection(row)
+{
+  var x = grid.x - (2 * grid.width / grid.dimensions.x);
+  var y = grid.y + (grid.height * row / grid.dimensions.y);
+  var width = grid.width / grid.dimensions.x;
+  var height = grid.height / grid.dimensions.y;
+
+  draw_rectangle(x, grid.y, width, grid.height, white);
+
+  draw_rectangle(x, y, width, height, green);
+}

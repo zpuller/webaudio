@@ -1,5 +1,6 @@
 var grid_keys = ['a','s','d','f','g','h','j','k'];
 var active_tiles = [];
+var active_row = 0;
 
 function handle_click(event)
 {
@@ -25,6 +26,9 @@ function handle_click(event)
     active_tiles[tile.y][tile.x] = false;
     fill_tile_color(tile, grey);
   }
+
+  active_row = tile.y;
+  draw_row_selection(active_row);
 }
 
 function play_beat(beat)

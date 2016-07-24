@@ -12,7 +12,7 @@ function handle_click_li(event)
   var target = event.target;
   target.style = "background: #ffffff;"
   var key = target.innerText;
-  active_buffers[0] = buffers[key];
+  active_buffers[active_row] = buffers[key];
 }
 
 function add_sound_assignment(file_name)
