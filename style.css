@@ -1,0 +1,24 @@
+ul.content {
+  height: 20%;
+  left: 0px;
+  overflow: scroll;
+}
+
+#menu {
+  position: absolute;
+  width: 15%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  background: #505050;
+  overflow-y: scroll;
+}
+
+#canvas {
+  position: absolute;
+  left: 15%;
+  top: 0px;
+  width: 85%;
+  height: 100%;
+}
