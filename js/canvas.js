@@ -66,42 +66,22 @@ function fill_record(color)
   ctx.fill();
 }
 
-function render()
-{
-  var ctx = canvas.getContext('2d');
-  
-  ctx.drawImage(sequencer_img, (canvas.width - sequencer_img.width)/2, (canvas.height - sequencer_img.height)/2, sequencer_img.width, sequencer_img.height);
-  grid.x = (canvas.width - sequencer_img.width)/2 + 60;
-  grid.y = (canvas.height - sequencer_img.height)/2 + 60;
-  grid.width = sequencer_img.width - 120;
-  grid.height = sequencer_img.height - 120;
-}
-
 function fill_tile_color(tile, color)
 {
-  var x = grid.x + (grid.width * tile.x / grid.dimension);
-  var y = grid.y + (grid.height * tile.y / grid.dimension);
-  var width = grid.width / grid.dimension;
-  var height = grid.height / grid.dimension;
+  var x = grid.x + (grid.width * tile.x / grid.dimensions.x);
+  var y = grid.y + (grid.height * tile.y / grid.dimensions.y);
+  var width = grid.width / grid.dimensions.x;
+  var height = grid.height / grid.dimensions.y;
   draw_rectangle(x, y, width, height, color);
 }
 
 function fill_tile_img(tile, img)
 {
-  var x = grid.x + (grid.width * tile.x / grid.dimension);
-  var y = grid.y + (grid.height * tile.y / grid.dimension);
-  var width = grid.width / grid.dimension;
-  var height = grid.height / grid.dimension;
+  var x = grid.x + (grid.width * tile.x / grid.dimensions.x);
+  var y = grid.y + (grid.height * tile.y / grid.dimensions.y);
+  var width = grid.width / grid.dimensions.x;
+  var height = grid.height / grid.dimensions.y;
 
   var ctx = canvas.getContext('2d');
   ctx.drawImage(img, x, y, width, height); 
 }
-
-draw_canvas_background();
-
-var tile_img = new Image();
-tile_img.src = "tile.png";
-
-var sequencer_img = new Image();
-sequencer_img.src = "sequencer.png";
-sequencer_img.onload = render;

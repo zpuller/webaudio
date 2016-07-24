@@ -81,14 +81,14 @@ function load_sounds(obj, soundMap, callback)
 }
 
 var buffers = {};
-var paths = { 1: [location.origin,'/samples/1.wav'].join('')
-    , 2: [location.origin,'/samples/2.wav'].join('')
-    , 3: [location.origin,'/samples/3.wav'].join('')
-    , 4: [location.origin,'/samples/4.wav'].join('')
-    , 5: [location.origin,'/samples/5.wav'].join('')
-    , 6: [location.origin,'/samples/6.wav'].join('')
-    , 7: [location.origin,'/samples/7.wav'].join('')
-    , 8: [location.origin,'/samples/8.wav'].join('')
-};
+var active_buffers = [];
+var samples_dir = [location.origin,'/samples/'].join('');
+var paths = {};
+file_names.forEach(function(fn) {
+  paths[fn] = [samples_dir, fn].join(''); 
+})
 
-load_sounds(buffers, paths, function() {});
+function set_default_active_buffers()
+{
+  file_names.forEach(add_sound_assignment);
+}
