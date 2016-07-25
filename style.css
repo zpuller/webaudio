@@ -1,8 +1,18 @@
 ul.content {
-  height: 20%;
+  height: 10%;
   left: 0px;
   overflow-y: scroll;
   list-style-type: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: default;
+}
+
+#tempo{
+  background: #ffffff;
+  text-align: center;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;

@@ -11,10 +11,43 @@ for (var i = 0; i < grid.dimensions.y; ++i)
   }
 }
 
-setInterval(tick, 1000 / 2);
+var tempo_elem = document.getElementById('tempo');
+var tempo = 120;
+tempo_elem.innerText = [tempo, " bpm"].join('');
+var play = setInterval(tick, 1000 * 60 / tempo);
+function change_tempo(tempo)
+{
+  window.clearInterval(play);
+  play = setInterval(tick, 1000 * 60 / tempo);
+  tempo_elem.innerText = [tempo, " bpm"].join('');
+}
+
+var tempo_mouse;
+tempo_elem.addEventListener('mousedown', start_scroll_tempo) 
+function start_scroll_tempo(event)
+{
+  tempo_mouse = event.pageY;
+  window.addEventListener('mousemove', scroll_tempo); 
+  window.addEventListener('mouseup', stop_scroll_tempo); 
+}
+function stop_scroll_tempo()
+{
+  window.removeEventListener('mousemove', scroll_tempo); 
+  window.removeEventListener('mouseup', stop_scroll_tempo); 
+}
+function scroll_tempo()
+{
+  var diff = event.pageY - tempo_mouse;
+  if (tempo - diff > 0)
+  {
+    tempo -= diff;
+    tempo_mouse = event.pageY;
+    change_tempo(tempo);
+  }
+}
+
 load_sounds(buffers, paths, set_default_active_buffers); 
 window.addEventListener('click', handle_click);
-
 
 var tile_img = new Image();
 tile_img.src = "tile.png";
