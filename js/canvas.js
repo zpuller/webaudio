@@ -100,15 +100,16 @@ function draw_tiles()
   }
 }
 
+var offset = 0;
 function draw_outline(seq)
 {
   var ctx = canvas.getContext('2d');
   ctx.lineWidth = 5;
 
-  var x = (canvas.width - seq.width) / 2;
-  var y = (canvas.height - seq.height) / 2;
-  var width = seq.width;
-  var height = seq.height;
+  var x = (canvas.width - seq.width) / 2 - offset;
+  var y = (canvas.height - seq.height) / 2 - offset;
+  var width = seq.width + 2*offset;
+  var height = seq.height + 2*offset;
   var c1 = 250;
   var c2 = 50;
   var c3 = 150;
@@ -123,15 +124,15 @@ function draw_outline(seq)
   ctx.stroke();
 }
 
-function render(row)
+function render()
 {
-  var x = grid.x - (2 * grid.width / grid.dimensions.x);
-  var y = grid.y + (grid.height * row / grid.dimensions.y);
-  var width = grid.width / grid.dimensions.x;
+  var x = grid.x;
+  var y = grid.y + (grid.height * active_row / grid.dimensions.y);
+  var width = grid.width;
   var height = grid.height / grid.dimensions.y;
 
   draw_canvas_background();
   draw_outline(sequencer);
-  draw_tiles();
   draw_rectangle(x, y, width, height, green);
+  draw_tiles();
 }

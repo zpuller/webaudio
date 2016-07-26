@@ -26,7 +26,7 @@ function handle_click(event)
   }
 
   active_row = tile.y;
-  render(active_row);
+  render();
 }
 
 function play_beat(beat)
@@ -38,6 +38,10 @@ function play_beat(beat)
       play_sound(active_buffers[i], 0);
     }
   }
+  offset = 10; 
+  render();
+  offset = 0; 
+  setTimeout(render, 80);
 }
 
 var beat = 0;

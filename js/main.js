@@ -61,4 +61,5 @@ grid.x = (canvas.width - sequencer.width)/2 + 60;
 grid.y = (canvas.height - sequencer.height)/2 + 60;
 grid.width = sequencer.width - 120;
 grid.height = sequencer.height - 120;
-draw_outline(sequencer);
+
+render();
