@@ -15,6 +15,7 @@ var tempo_elem = document.getElementById('tempo');
 var tempo = 120;
 tempo_elem.innerText = [tempo, " bpm"].join('');
 var play = setInterval(tick, 1000 * 60 / tempo);
+
 function change_tempo(tempo)
 {
   window.clearInterval(play);
@@ -24,17 +25,20 @@ function change_tempo(tempo)
 
 var tempo_mouse;
 tempo_elem.addEventListener('mousedown', start_scroll_tempo) 
+
 function start_scroll_tempo(event)
 {
   tempo_mouse = event.pageY;
   window.addEventListener('mousemove', scroll_tempo); 
   window.addEventListener('mouseup', stop_scroll_tempo); 
 }
+
 function stop_scroll_tempo()
 {
   window.removeEventListener('mousemove', scroll_tempo); 
   window.removeEventListener('mouseup', stop_scroll_tempo); 
 }
+
 function scroll_tempo()
 {
   var diff = event.pageY - tempo_mouse;
@@ -52,17 +56,9 @@ window.addEventListener('click', handle_click);
 var tile_img = new Image();
 tile_img.src = "tile.png";
 
-var sequencer_img = new Image();
-sequencer_img.src = "sequencer.png";
-sequencer_img.onload = init_grid;
-function init_grid()
-{
-  grid.x = (canvas.width - sequencer_img.width)/2 + 60;
-  grid.y = (canvas.height - sequencer_img.height)/2 + 60;
-  grid.width = sequencer_img.width - 120;
-  grid.height = sequencer_img.height - 120;
-
-  var ctx = canvas.getContext('2d');
-  
-  ctx.drawImage(sequencer_img, (canvas.width - sequencer_img.width)/2, (canvas.height - sequencer_img.height)/2, sequencer_img.width, sequencer_img.height);
-}
+var sequencer = { width: 1080, height: 768 };
+grid.x = (canvas.width - sequencer.width)/2 + 60;
+grid.y = (canvas.height - sequencer.height)/2 + 60;
+grid.width = sequencer.width - 120;
+grid.height = sequencer.height - 120;
+draw_outline(sequencer);

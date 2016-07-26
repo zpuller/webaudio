@@ -77,6 +77,8 @@ function fill_tile_color(tile, color)
 
 function fill_tile_img(tile, img)
 {
+  console.log(tile);
+  console.log(img);
   var x = grid.x + (grid.width * tile.x / grid.dimensions.x);
   var y = grid.y + (grid.height * tile.y / grid.dimensions.y);
   var width = grid.width / grid.dimensions.x;
@@ -86,14 +88,50 @@ function fill_tile_img(tile, img)
   ctx.drawImage(img, x, y, width, height); 
 }
 
-function draw_row_selection(row)
+function draw_tiles()
+{
+  for (var i = 0; i < grid.dimensions.y; ++i)
+  {
+    for (var j = 0; j < grid.dimensions.x; ++j)
+    {
+      if (active_tiles[i][j])
+        fill_tile_img({ y: i, x: j }, tile_img);
+    }
+  }
+}
+
+function draw_outline(seq)
+{
+  var ctx = canvas.getContext('2d');
+  ctx.lineWidth = 5;
+
+  var x = (canvas.width - seq.width) / 2;
+  var y = (canvas.height - seq.height) / 2;
+  var width = seq.width;
+  var height = seq.height;
+  var c1 = 250;
+  var c2 = 50;
+  var c3 = 150;
+  var c4 = 50;
+
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.bezierCurveTo(x - c1, y + c2, x - c1, y + height - c2, x, y + height);
+  ctx.bezierCurveTo(x + c3, y + height + c4, x + width - c3, y + height + c4, x + width, y + height);
+  ctx.bezierCurveTo(x + width + c1, y + height - c2, x + width + c1, y + c2, x + width, y);
+  ctx.bezierCurveTo(x + width - c3, y - c4, x + c3, y - c4, x+20, y+20);
+  ctx.stroke();
+}
+
+function render(row)
 {
   var x = grid.x - (2 * grid.width / grid.dimensions.x);
   var y = grid.y + (grid.height * row / grid.dimensions.y);
   var width = grid.width / grid.dimensions.x;
   var height = grid.height / grid.dimensions.y;
 
-  draw_rectangle(x, grid.y, width, grid.height, white);
-
+  draw_canvas_background();
+  draw_outline(sequencer);
+  draw_tiles();
   draw_rectangle(x, y, width, height, green);
 }
