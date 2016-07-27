@@ -56,10 +56,10 @@ window.addEventListener('click', handle_click);
 var tile_img = new Image();
 tile_img.src = "tile.png";
 
-var sequencer = { width: 1080, height: 768 };
-grid.x = (canvas.width - sequencer.width)/2 + 60;
+var sequencer = { width: 1080, height: 768, color: black };
+grid.x = (canvas.width - sequencer.width)/2; 
 grid.y = (canvas.height - sequencer.height)/2 + 60;
-grid.width = sequencer.width - 120;
+grid.width = sequencer.width;
 grid.height = sequencer.height - 120;
 
 render();

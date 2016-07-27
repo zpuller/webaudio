@@ -1,12 +1,13 @@
-var canvas = document.getElementById('canvas');
-canvas.width = 1920;
-canvas.height = 1080;
-
 var red = 'rgb(255, 0, 0)'
 var green = 'rgb(0, 255, 0)'
 var white = 'rgb(255, 255, 255)'
 var black = 'rgb(0, 0, 0)'
 var grey = 'rgb(80, 80, 80)'
+
+var canvas = document.getElementById('canvas');
+canvas.width = 1920;
+canvas.height = 1080;
+canvas.color = white;
 
 function draw_rectangle(x, y, width, height, color)
 {
@@ -18,7 +19,7 @@ function draw_rectangle(x, y, width, height, color)
 function draw_canvas_background()
 {
   var ctx = canvas.getContext('2d');
-  ctx.fillStyle = white; 
+  ctx.fillStyle = canvas.color; 
   ctx.fillRect (0, 0, canvas.width, canvas.height);
 }
 
@@ -104,6 +105,7 @@ var offset = 0;
 function draw_outline(seq)
 {
   var ctx = canvas.getContext('2d');
+  ctx.strokeStyle = seq.color;
   ctx.lineWidth = 5;
 
   var x = (canvas.width - seq.width) / 2 - offset;
@@ -135,4 +137,10 @@ function render()
   draw_outline(sequencer);
   draw_rectangle(x, y, width, height, green);
   draw_tiles();
+}
+
+function flip_colors()
+{
+  canvas.color = canvas.color == black ? white : black;
+  sequencer.color = sequencer.color == black ? white : black;
 }

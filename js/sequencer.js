@@ -48,5 +48,8 @@ var beat = 0;
 function tick()
 {
   beat = (beat + 1) % 8;
+  if (!beat)
+    flip_colors();
+
   play_beat(beat);
 }
