@@ -1,9 +1,3 @@
-var red = 'rgb(255, 0, 0)'
-var green = 'rgb(0, 255, 0)'
-var white = 'rgb(255, 255, 255)'
-var black = 'rgb(0, 0, 0)'
-var grey = 'rgb(80, 80, 80)'
-
 var canvas = document.getElementById('canvas');
 canvas.width = 1920;
 canvas.height = 1080;
@@ -78,8 +72,6 @@ function fill_tile_color(tile, color)
 
 function fill_tile_img(tile, img)
 {
-  console.log(tile);
-  console.log(img);
   var x = grid.x + (grid.width * tile.x / grid.dimensions.x);
   var y = grid.y + (grid.height * tile.y / grid.dimensions.y);
   var width = grid.width / grid.dimensions.x;
@@ -89,20 +81,19 @@ function fill_tile_img(tile, img)
   ctx.drawImage(img, x, y, width, height); 
 }
 
-function draw_tiles()
+function draw_tiles(sequencer)
 {
   for (var i = 0; i < grid.dimensions.y; ++i)
   {
     for (var j = 0; j < grid.dimensions.x; ++j)
     {
-      if (active_tiles[i][j])
+      if (sequencer.active_tiles[i][j])
         fill_tile_img({ y: i, x: j }, tile_img);
     }
   }
 }
 
-var offset = 0;
-function draw_outline(seq)
+function draw_outline(seq, offset)
 {
   var ctx = canvas.getContext('2d');
   ctx.strokeStyle = seq.color;
@@ -126,17 +117,17 @@ function draw_outline(seq)
   ctx.stroke();
 }
 
-function render()
+function render(sequencer, offset = 0)
 {
   var x = grid.x;
-  var y = grid.y + (grid.height * active_row / grid.dimensions.y);
+  var y = grid.y + (grid.height * sequencer.active_row / grid.dimensions.y);
   var width = grid.width;
   var height = grid.height / grid.dimensions.y;
 
   draw_canvas_background();
-  draw_outline(sequencer);
+  draw_outline(sequencer, offset);
   draw_rectangle(x, y, width, height, green);
-  draw_tiles();
+  draw_tiles(sequencer);
 }
 
 function flip_colors()

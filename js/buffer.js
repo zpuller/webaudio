@@ -1,16 +1,13 @@
-audio_ctx = new (window.AudioContext || window.webkitAudioContext)();
-
-function BufferLoader(audio_ctx, urlList, callback)
+function BufferLoader(audio_ctx, url_list, callback)
 {
   this.audio_ctx = audio_ctx;
-  this.urlList = urlList;
+  this.url_list = url_list;
   this.onload = callback;
-  this.bufferList = new Array();
-  this.loadCount = 0;
+  this.buffer_list = new Array();
+  this.load_count = 0;
 }
 
-BufferLoader.prototype.load_buffer = function(url, index)
-{
+BufferLoader.prototype.load_buffer = function(url, index) {
   var request = new XMLHttpRequest();
   request.open("GET", url, true);
   request.responseType = "arraybuffer";
@@ -25,9 +22,9 @@ BufferLoader.prototype.load_buffer = function(url, index)
           alert('error decoding file data: ' + url);
           return;
         }
-        loader.bufferList[index] = buffer;
-        if (++loader.loadCount == loader.urlList.length)
-          loader.onload(loader.bufferList);
+        loader.buffer_list[index] = buffer;
+        if (++loader.load_count == loader.url_list.length)
+          loader.onload(loader.buffer_list);
       },
       function(error) {
         console.error('decodeAudioData error', error);
@@ -43,11 +40,11 @@ BufferLoader.prototype.load_buffer = function(url, index)
 };
 
 BufferLoader.prototype.load = function() {
-  for (var i = 0; i < this.urlList.length; ++i)
-  this.load_buffer(this.urlList[i], i);
+  for (var i = 0; i < this.url_list.length; ++i)
+  this.load_buffer(this.url_list[i], i);
 };
 
-function play_sound(buffer, time) 
+function play_sound(audio_ctx, buffer, time) 
 {
   var source = audio_ctx.createBufferSource();
   source.buffer = buffer;
@@ -55,7 +52,7 @@ function play_sound(buffer, time)
   source[source.start ? 'start' : 'noteOn'](time);
 }
 
-function load_sounds(obj, soundMap, callback) 
+function load_sounds(audio_ctx, obj, soundMap, callback) 
 {
   var names = [];
   var paths = [];
@@ -65,10 +62,10 @@ function load_sounds(obj, soundMap, callback)
     names.push(name);
     paths.push(path);
   }
-  bufferLoader = new BufferLoader(audio_ctx, paths, function(bufferList) {
-    for (var i = 0; i < bufferList.length; i++) 
+  bufferLoader = new BufferLoader(audio_ctx, paths, function(buffer_list) {
+    for (var i = 0; i < buffer_list.length; i++) 
     {
-      var buffer = bufferList[i];
+      var buffer = buffer_list[i];
       var name = names[i];
       obj[name] = buffer;
     }
@@ -78,17 +75,4 @@ function load_sounds(obj, soundMap, callback)
     }
   });
   bufferLoader.load();
-}
-
-var buffers = {};
-var active_buffers = [];
-var samples_dir = [location.origin,'/samples/'].join('');
-var paths = {};
-file_names.forEach(function(fn) {
-  paths[fn] = [samples_dir, fn].join(''); 
-})
-
-function set_default_active_buffers()
-{
-  file_names.forEach(add_sound_assignment);
 }

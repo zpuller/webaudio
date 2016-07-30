@@ -1,9 +1,12 @@
-var grid_keys = ['a','s','d','f','g','h','j','k'];
-var active_tiles = [];
-var active_row = 0;
-
-function handle_click(event)
+function Sequencer(audio_ctx)
 {
+  this.audio_ctx = audio_ctx;
+  this.active_tiles = new Array();
+  this.active_row = 0;
+  this.beat = 0;
+}
+
+Sequencer.prototype.handle_click = function(event) {
   var x = Math.floor(canvas.width * (event.offsetX / canvas.clientWidth));
   var y = Math.floor(canvas.height * (event.offsetY / canvas.clientHeight));
   if (x < grid.x || y < grid.y
@@ -16,40 +19,37 @@ function handle_click(event)
   tile.x = Math.floor((x - grid.x) / width);
   tile.y = Math.floor((y - grid.y) / height);
   
-  if (!active_tiles[tile.y][tile.x])
+  if (!this.active_tiles[tile.y][tile.x])
   {
-    active_tiles[tile.y][tile.x] = true;
+    this.active_tiles[tile.y][tile.x] = true;
   }
   else
   {
-    active_tiles[tile.y][tile.x] = false;
+    this.active_tiles[tile.y][tile.x] = false;
   }
 
-  active_row = tile.y;
-  render();
-}
+  this.active_row = tile.y;
+  render(this);
+};
 
-function play_beat(beat)
-{
+Sequencer.prototype.play_beat = function(beat) {
   for (var i = 0; i < grid.dimensions.y; ++i)
   {
-    if (active_tiles[i][beat])
+    if (this.active_tiles[i][beat])
     {
-      play_sound(active_buffers[i], 0);
+      play_sound(this.audio_ctx, active_buffers[i], 0);
     }
   }
   offset = 10; 
-  render();
+  render(this, offset);
   offset = 0; 
-  setTimeout(render, 80);
-}
+  setTimeout(function() { render(this, offset) }.bind(this), 80);
+};
 
-var beat = 0;
-function tick()
-{
-  beat = (beat + 1) % 8;
-  if (!beat)
+Sequencer.prototype.tick = function() {
+  this.beat = (this.beat + 1) % 8;
+  if (!this.beat)
     flip_colors();
 
-  play_beat(beat);
-}
+  this.play_beat(this.beat);
+};
