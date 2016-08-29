@@ -35,8 +35,9 @@ Sequencer.prototype.handle_click = function(event) {
 Sequencer.prototype.play_beat = function(beat) {
   for (var i = 0; i < grid.dimensions.y; ++i)
   {
-    if (this.active_tiles[i][beat])
+    if (this.active_tiles[i][beat] && active_buffers[i])
     {
+      console.log(active_buffers[i])
       play_sound(this.audio_ctx, active_buffers[i], 0);
     }
   }
